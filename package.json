@@ -1,0 +1,46 @@
+{
+  "name": "bootstrap-utility-classnames",
+  "description": "Generates Bootstrap utility and helper class names",
+  "version": "0.5.3",
+  "license": "(MIT OR Unlicense)",
+  "homepage": "https://github.com/22222/bootstrap-utility-classnames",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/22222/bootstrap-utility-classnames"
+  },
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "devDependencies": {
+    "prettier": "^2.8.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
+  },
+  "scripts": {
+    "prebuild": "npm run clean && npm run format:check",
+    "build": "npm run build:concat && npm run build:types & npm run build:umd && npm run build:esm && npm run build:cjs",
+    "build:concat": "node ./scripts/concat.js",
+    "build:types": "tsc build/index.ts --emitDeclarationOnly --declaration --outDir dist",
+    "build:umd": "tsc build/index.ts --module umd --outDir dist && node ./scripts/rename dist/index.js dist/index.umd.js",
+    "build:esm": "tsc build/index.ts --module esnext --outDir dist && node ./scripts/rename dist/index.js dist/index.mjs",
+    "build:cjs": "tsc build/index.ts --module commonjs --outDir dist",
+    "clean": "npm run clean:build && npm run clean:dist",
+    "clean:build": "rimraf ./build",
+    "clean:dist": "rimraf ./dist",
+    "format": "prettier \"{src,scripts}/**/*.{ts,js,json}\" README.md --write",
+    "format:check": "prettier \"{src,scripts}/**/*.{ts,js,json}\" README.md --check",
+    "test": "echo \"No test specified\""
+  }
+}
